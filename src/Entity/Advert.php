@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AdvertRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
 class Advert
@@ -13,15 +14,19 @@ class Advert
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\NotBlank, Assert\Length(min: 3, max: 100, maxMessage: 'Le nom ne peut pas avoir plus de {{ limit }} caractères', minMessage: 'L\'advert ne peut pas avoir moins de {{ limit }} caractères')]
     #[ORM\Column(type: 'string', length: 100)]
     private $title;
 
+    #[Assert\NotBlank, Assert\Length(max: 1200, maxMessage: 'La description ne peut pas avoir plus de {{ limit }} caractères')]
     #[ORM\Column(type: 'text')]
     private $content;
 
+    #[Assert\NotBlank, Assert\Length(max: 255, maxMessage: 'L\'utilisateur ne peut pas avoir plus de {{ limit }} caractères')]
     #[ORM\Column(type: 'string', length: 255)]
     private $author;
 
+    #[Assert\NotBlank, Assert\Length(max: 255, maxMessage: 'L\'email ne peut pas avoir plus de {{ limit }} caractères',)]
     #[ORM\Column(type: 'string', length: 255)]
     private $email;
 
@@ -29,12 +34,19 @@ class Advert
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
+    #[Assert\NotBlank, Assert\Range(
+        min: 1,
+        max: 1000000.00,
+        notInRangeMessage: 'Le prix doit être entre {{ min }} et {{ max }} €',
+    )]
     #[ORM\Column(type: 'float')]
     private $price;
 
+    #[Assert\NotBlank, Assert\Length(max: 255, maxMessage: 'Le status ne peut pas avoir plus de {{ limit }} caractères',)]
     #[ORM\Column(type: 'string', length: 255)]
     private $state;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 

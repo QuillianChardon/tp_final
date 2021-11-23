@@ -4,28 +4,33 @@
 {% endblock %}
 
 {% block body %}
-<table class="table">
-	<thead>
-		<tr>
-			<th scope="col">Id</th>
-			<th scope="col">Title</th>
-			<th scope="col">Action</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for category in categorys %}
-			<th cope="row">{{category.id}}</th>
-			<td>{{category.name}}</td>
-			<td>
-				<a href="{{ path("category_edit", {'id':category.id} ) }}" class="btn btn-warning">
-					<i class="fas fa-pen"></i>&nbsp;Modification
-				</a>
-				<form method="post" action="{{ path('category_delete', {'id': category.id}) }}" style="display: inline-block;">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
-					<button class="btn btn-danger">
-						<i class="fas fa-times"></i>&nbsp; Delete</button>
-				</form>
-			</td>
-		</tbody>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Title</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categorys %}
+				<th cope="row">{{category.id}}</th>
+				<td>{{category.name}}</td>
+				<td>
+					<a href="{{ path("category_edit", {'id':category.id} ) }}" class="btn btn-warning">
+						<i class="fas fa-pen"></i>&nbsp;Modification
+					</a>
+					<form method="post" action="{{ path('category_delete', {'id': category.id}) }}" style="display: inline-block;">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+						<button class="btn btn-danger">
+							<i class="fas fa-times"></i>&nbsp; Delete</button>
+					</form>
+				</td>
+
+			</tr>
+		{% endfor %}
 	</tbody>
-</tr>{% endfor %}</tbody></table><a href="{{ path("category_add") }}" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Ajouter</a>{% endblock %}
+</table>
+<a href="{{ path("category_add") }}" class="btn btn-primary">
+	<i class="fas fa-plus"></i>&nbsp;Ajouter
+</a>{% endblock %}
