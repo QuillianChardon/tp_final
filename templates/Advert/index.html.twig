@@ -22,19 +22,27 @@
 		</thead>
 		<tbody>
 			{% for advert in adverts %}
-				<th cope="row">{{advert.id}}</th>
-				<td>{{advert.category.name}}</td>
-				<td>{{advert.title}}</td>
-				<td>{{advert.content}}</td>
-				<td>{{advert.author}}</td>
-				<td>{{advert.email}}</td>
-				<td>{{advert.price}}</td>
-				<td>{{advert.state}}</td>
-				<td>{{advert.created_at|date}}</td>
-				<td>{{advert.publish_at|date}}</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-<a href="{{ path("category_add") }}" class="btn btn-primary">
-	<i class="fas fa-plus"></i>&nbsp;Ajouter</a>{% endblock %}
+				<tr>
+					<th cope="row">{{advert.id}}</th>
+					<td>
+						<ul>
+							{% for category in advert.category %}
+								<li>{{category.name}}</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>{{advert.title}}</td>
+					<td>{{advert.content}}</td>
+					<td>{{advert.author}}</td>
+					<td>{{advert.email}}</td>
+					<td>{{advert.price}}</td>
+					<td>{{advert.state}}</td>
+					<td>{{advert.created_at|date}}</td>
+					<td>{{advert.publish_at|date}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<a href="{{ path("category_add") }}" class="btn btn-primary">
+		<i class="fas fa-plus"></i>&nbsp;Ajouter</a>
+{% endblock %}
