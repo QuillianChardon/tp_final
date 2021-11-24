@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AdminUser{% endblock %}
+
+{% block body %}
+    <h2>Create new AdminUser</h2>
+	{{ form_start(form) }}
+	{{ form_errors(form) }}
+	<div class="row">
+		<div class="col">
+			{{ form_row(form.username)}}
+			{{ form_row(form.email)}}
+			{{ form_row(form.password)}}
+
+		</div>
+		<div class="col">
+			{{ form_row(form.roles)}}
+
+		</div>
+	</div>
+    <button type="submit" class="btn btn-primary mt-2">
+		<i class="fas fa-save"></i>
+		Créer la l'utilisateur
+	</button>
+
+	{{ form_end(form) }}
+
+
+{% endblock %}
