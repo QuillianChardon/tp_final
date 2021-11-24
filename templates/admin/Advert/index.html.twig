@@ -25,11 +25,7 @@
 				<tr>
 					<th cope="row">{{advert.id}}</th>
 					<td>
-						<ul>
-							{% for category in advert.category %}
-								<li>{{category.name}}</li>
-							{% endfor %}
-						</ul>
+						{{advert.category.name}}
 					</td>
 					<td>{{advert.title}}</td>
 					<td>{{advert.content}}</td>
@@ -37,12 +33,22 @@
 					<td>{{advert.email}}</td>
 					<td>{{advert.price}}</td>
 					<td>{{advert.state}}</td>
-					<td>{{advert.created_at|date}}</td>
-					<td>{{advert.publish_at|date}}</td>
+					<td>{{advert.createdAt|date}}</td>
+					<td>{{advert.publishAt|date}}</td>
+					<td>
+						<a href="{{ path("advert_edit", {'id':advert.id} ) }}" class="btn btn-warning">
+							<i class="fas fa-pen"></i>&nbsp;Modification
+						</a>
+						<form method="post" action="{{ path('advert_delete', {'id': advert.id}) }}" style="display: inline-block;">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advert.id) }}">
+							<button class="btn btn-danger">
+								<i class="fas fa-times"></i>&nbsp; Delete</button>
+						</form>
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-	<a href="{{ path("category_add") }}" class="btn btn-primary">
+	<a href="{{ path("advert_add") }}" class="btn btn-primary">
 		<i class="fas fa-plus"></i>&nbsp;Ajouter</a>
 {% endblock %}
