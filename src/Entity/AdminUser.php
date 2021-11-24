@@ -24,6 +24,7 @@ class AdminUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+
     public function getId(): ?int
     {
         return $this->id;

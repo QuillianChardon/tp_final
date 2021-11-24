@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/categorys', name: 'category_')]
+#[Route('/admin/category', name: 'category_')]
 class CategoryController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(CategoryRepository $categoryRepository): Response
     {
         $categorys = $categoryRepository->findAll();
-        return $this->render('category/index.html.twig', [
+        return $this->render('admin/category/index.html.twig', [
             'categorys' => $categorys,
         ]);
     }
@@ -28,7 +28,7 @@ class CategoryController extends AbstractController
     {
         $form = $this->createForm(CategoryType::class, new Category());
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($form->getData());
             $em->flush();
 
@@ -36,7 +36,7 @@ class CategoryController extends AbstractController
         }
 
 
-        return $this->render('category/add.html.twig', [
+        return $this->render('admin/category/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -47,7 +47,7 @@ class CategoryController extends AbstractController
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($form->getData());
             $em->flush();
 
@@ -55,7 +55,7 @@ class CategoryController extends AbstractController
         }
 
 
-        return $this->render('category/edit.html.twig', [
+        return $this->render('admin/category/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
