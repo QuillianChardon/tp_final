@@ -2,27 +2,32 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
+use App\Entity\Advert;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryType extends AbstractType
+class AdvertType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom de la catégorie',
-                'attr' => ['placeholder' => 'tapez le nom']
-            ]);
+            ->add('title')
+            ->add('content')
+            ->add('author')
+            ->add('email')
+            ->add('price')
+            ->add('state')
+            ->add('createdAt')
+            ->add('publishAt')
+            ->add('category')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
+            'data_class' => Advert::class,
         ]);
     }
 }
