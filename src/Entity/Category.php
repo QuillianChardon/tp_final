@@ -8,19 +8,24 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
-    #[Assert\NotBlank, Assert\Length(max: 255, maxMessage: 'La Categorie ne peut pas avoir plus de {{ limit }} caractères',)]
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom ne peut pas depasser {{ limit }} caratère',
+    )]
+    private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Advert::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Advert::class)]
     private $adverts;
 
     public function __construct()
