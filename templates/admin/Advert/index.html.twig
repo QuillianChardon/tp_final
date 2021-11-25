@@ -17,7 +17,7 @@
 				<th scope="col">state</th>
 				<th scope="col">Created at</th>
 				<th scope="col">publish at</th>
-				<th scope="col">Action</th>
+				{# <th scope="col">Action</th> #}
 			</tr>
 		</thead>
 		<tbody>
@@ -35,20 +35,20 @@
 					<td>{{advert.state}}</td>
 					<td>{{advert.createdAt|date}}</td>
 					<td>{{advert.publishAt|date}}</td>
-					<td>
-						<a href="{{ path("advert_edit", {'id':advert.id} ) }}" class="btn btn-warning">
-							<i class="fas fa-pen"></i>&nbsp;Modification
-						</a>
-						<form method="post" action="{{ path('advert_delete', {'id': advert.id}) }}" style="display: inline-block;">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advert.id) }}">
-							<button class="btn btn-danger">
-								<i class="fas fa-times"></i>&nbsp; Delete</button>
-						</form>
-					</td>
+					{# <td>
+											<a href="{{ path("advert_edit", {'id':advert.id} ) }}" class="btn btn-warning">
+												<i class="fas fa-pen"></i>&nbsp;Modification
+											</a>
+											<form method="post" action="{{ path('advert_delete', {'id': advert.id}) }}" style="display: inline-block;">
+												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advert.id) }}">
+												<button class="btn btn-danger">
+													<i class="fas fa-times"></i>&nbsp; Delete</button>
+											</form>
+										</td> #}
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-	<a href="{{ path("advert_add") }}" class="btn btn-primary">
-		<i class="fas fa-plus"></i>&nbsp;Ajouter</a>
+	{# <a href="{{ path("advert_add") }}" class="btn btn-primary">
+				<i class="fas fa-plus"></i>&nbsp;Ajouter</a> #}
 {% endblock %}

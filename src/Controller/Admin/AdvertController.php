@@ -23,7 +23,7 @@ class AdvertController extends AbstractController
         ]);
     }
 
-
+    /* Mise en commentaire des création / modification / delete des adverts
     #[Route('/add', name: 'add')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
@@ -71,4 +71,5 @@ class AdvertController extends AbstractController
 
         return $this->redirectToRoute('advert_index');
     }
+    */
 }
