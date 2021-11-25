@@ -33,8 +33,8 @@ class AdminUserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-            $adminUser->setPassword($encoder->hashPassword($adminUser, $adminUser->getPlainPassword()));
-            $adminUser->setPlainPassword(null);
+            // $adminUser->setPassword($encoder->hashPassword($adminUser, $adminUser->getPlainPassword()));
+            // $adminUser->setPlainPassword(null);
 
             $entityManager->persist($adminUser);
             $entityManager->flush();
@@ -58,8 +58,8 @@ class AdminUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $adminUser->setPassword($encoder->hashPassword($adminUser, $adminUser->getPlainPassword()));
-            $adminUser->setPlainPassword(null);
+            // $adminUser->setPassword($encoder->hashPassword($adminUser, $adminUser->getPlainPassword()));
+            // $adminUser->setPlainPassword(null);
 
             $entityManager->flush();
 
