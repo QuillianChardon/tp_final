@@ -26,7 +26,9 @@ class AdminUserType extends AbstractType
                     'User' => 'ROLE_USER',
                 ]
             ])
-            ->add('password', PasswordType::class);
+            ->add('plainpassword', PasswordType::class, [
+                'label' => 'Mot de passe'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -23,7 +23,7 @@ class AdminUserController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'admin_user_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'admin_user_new')]
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder): Response
     {
         $adminUser = new AdminUser();
@@ -33,7 +33,8 @@ class AdminUserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-            $adminUser->setPassword($encoder->hashPassword($adminUser, $adminUser->getPassword()));
+            $adminUser->setPassword($encoder->hashPassword($adminUser, $adminUser->getPlainPassword()));
+            $adminUser->setPlainPassword(null);
 
             $entityManager->persist($adminUser);
             $entityManager->flush();
@@ -50,12 +51,15 @@ class AdminUserController extends AbstractController
 
 
     #[Route('edit/{id}/', name: 'admin_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, AdminUser $adminUser, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, AdminUser $adminUser, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder): Response
     {
         $form = $this->createForm(AdminUserType::class, $adminUser);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $adminUser->setPassword($encoder->hashPassword($adminUser, $adminUser->getPlainPassword()));
+            $adminUser->setPlainPassword(null);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
@@ -63,7 +67,7 @@ class AdminUserController extends AbstractController
 
         return $this->renderForm('admin/admin_user/edit.html.twig', [
             'admin_user' => $adminUser,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
