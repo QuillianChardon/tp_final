@@ -39,6 +39,9 @@ framework:
                 reject:
                     from: draft
                     to:   rejected
+                unpublish:
+                    from: published
+                    to: rejected    
 
 when@test:
     framework:
