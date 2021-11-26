@@ -141,6 +141,9 @@ class AdminUser implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setPlainPassword($plainPassword)
     {
+        if (!empty($plainPassword)) {
+            $this->password = null;
+        }
         $this->plainPassword = $plainPassword;
 
         return $this;

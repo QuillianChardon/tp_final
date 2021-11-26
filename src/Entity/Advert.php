@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AdvertRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,6 +54,10 @@ class Advert
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $publishAt = null;
 
+    public function __construct()
+    {
+        $createdAt = new DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;

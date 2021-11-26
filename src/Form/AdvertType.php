@@ -37,10 +37,6 @@ class AdvertType extends AbstractType
                 'label' => 'Statue',
                 'attr' => ['placeholder' => 'valider']
             ])
-            ->add('createdAt', DateType::class, [
-                'label' => "Début de création",
-                'widget' => 'single_text',
-            ])
             ->add('publishAt', DateType::class, [
                 'label' => "Début de publication",
                 'widget' => 'single_text',

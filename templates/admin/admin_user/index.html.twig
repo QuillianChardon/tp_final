@@ -27,11 +27,14 @@
 						<a href="{{ path("admin_user_edit", {'id':admin_user.id} ) }}" class="btn btn-warning">
 							<i class="fas fa-pen"></i>&nbsp;Modification
 						</a>
-						<form method="post" action="{{ path('admin_user_delete', {'id': admin_user.id}) }}" style="display: inline-block;">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ admin_user.id) }}">
-							<button class="btn btn-danger">
-								<i class="fas fa-times"></i>&nbsp; Delete</button>
-						</form>
+						{% if user.id != admin_user.id %}
+							<form method="post" action="{{ path('admin_user_delete', {'id': admin_user.id}) }}" style="display: inline-block;">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ admin_user.id) }}">
+								<button class="btn btn-danger">
+									<i class="fas fa-times"></i>&nbsp; Delete</button>
+							</form>
+						{% endif %}
+
 					</td>
 				</tr>
 			{% else %}
