@@ -44,8 +44,8 @@ class Advert
     private ?float $price = null;
 
     #[Assert\NotBlank, Assert\Length(max: 255, maxMessage: 'Le status ne peut pas avoir plus de {{ limit }} caractères',)]
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $state = null;
+    #[ORM\Column(type: 'string', length: 255, options: ['default' => 'draft'])]
+    private ?string $state = 'draft';
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'datetime')]
@@ -56,7 +56,7 @@ class Advert
 
     public function __construct()
     {
-        $createdAt = new DateTime();
+        $this->setCreatedAt(new DateTime());
     }
     public function getId(): ?int
     {

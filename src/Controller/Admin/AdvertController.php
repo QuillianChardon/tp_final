@@ -17,13 +17,22 @@ class AdvertController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(AdvertRepository $advertRepository): Response
     {
+        $adverts = $advertRepository->findBy(['state' => 'published']);
+        return $this->render('admin/advert/index.html.twig', [
+            'adverts' => $adverts,
+        ]);
+    }
+
+    #[Route('/all/state', name: 'all_state')]
+    public function allState(AdvertRepository $advertRepository): Response
+    {
         $adverts = $advertRepository->findAll();
         return $this->render('admin/advert/index.html.twig', [
             'adverts' => $adverts,
         ]);
     }
 
-    /* Mise en commentaire des création / modification / delete des adverts
+    // Mise en commentaire des création / modification / delete des adverts
     #[Route('/add', name: 'add')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
@@ -71,5 +80,13 @@ class AdvertController extends AbstractController
 
         return $this->redirectToRoute('advert_index');
     }
-    */
+    // */
+
+    #[Route(path: '/{id}/{to}', name: 'transition', methods: ['GET'])]
+    public function applyTransition(WorkflowInterface $advertStateMachine, EntityManagerInterface $em, Advert $advert, string $to): Response
+    {
+        $advertStateMachine->apply($advert, $to);
+        $em->flush();
+        return $this->redirectToRoute('advert_index');
+    }
 }
