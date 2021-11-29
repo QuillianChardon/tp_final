@@ -13,7 +13,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for category in categorys %}
+			{% for category in categories %}
 				<th cope="row">{{category.id}}</th>
 				<td>{{category.name}}</td>
 				<td>
@@ -31,6 +31,9 @@
 		{% endfor %}
 	</tbody>
 </table>
+<div class="navigation">
+	{{ knp_pagination_render(categories) }}
+</div>
 <a href="{{ path("category_add") }}" class="btn btn-primary">
 	<i class="fas fa-plus"></i>&nbsp;Ajouter
 </a>{% endblock %}
