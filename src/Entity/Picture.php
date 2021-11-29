@@ -20,11 +20,11 @@ class Picture
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[Assert\NotBlank, Assert\Length(max: 500, maxMessage: 'L\'utilisateur ne peut pas avoir plus de {{ limit }} caractères')]
+
     #[ORM\Column(type: 'string', length: 500)]
     private ?string $path = null;
 
-    #[Assert\NotBlank]
+
     #[ORM\Column(type: 'datetime')]
     private ?\DateTime $createdAt = null;
 

@@ -1,3 +1,41 @@
 {% extends "base.html.twig" %}
 
-{% block body %}{% endblock %}
+{% block body %}
+	<h1>{{advert.title}}</h1>
+	<h4 class="text-muted">{{advert.category.name}}</h4>
+	<div class="row">
+		<div class="col">
+			<div>Autheur :
+				{{advert.author}}
+			</div>
+			<div>email :
+				{{advert.email}}
+			</div>
+			<div>prix :
+				{{advert.price}}
+			</div>
+		</div>
+		<div class="col">
+			{% if workflow_can(advert, 'publish') %}
+				<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'publish'}) }}" class="btn btn-warning">Publier</a>
+			{% endif %}
+			{% if workflow_can(advert, 'reject') %}
+				<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'reject'}) }}" class="btn btn-warning">Rejeter</a>
+			{% endif %}
+			{% if workflow_can(advert, 'unpublish') %}
+				<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'unpublish'}) }}" class="btn btn-warning">Dépublier</a>
+			{% endif %}
+			<a href="{{ path('advert_add_picture', {'id': advert.id} )}}" class="btn btn-success">
+				Photo</a>
+		</div>
+	</div>
+	<h4 class="text-muted">Photo :
+	</h4>
+	<div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
+		{% for picture in advert.pictures %}
+			<div class="col-sm-6 col-lg-4 mb-4">
+				<img src="{{ asset('images/adverts/')}}{{picture.path}}" class="img-fluid" alt="img">
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

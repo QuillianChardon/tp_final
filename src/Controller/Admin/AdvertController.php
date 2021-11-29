@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Advert;
+use App\Entity\Picture;
 use App\Form\AdvertType;
+use App\Form\PictureType;
 use App\Repository\AdvertRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -84,11 +86,43 @@ class AdvertController extends AbstractController
     }
     // */
 
-    #[Route(path: '/{id}/{to}', name: 'transition', methods: ['GET'])]
+    #[Route(path: '/{id}/{to}', name: 'transition', methods: ['GET'], priority: -1)]
     public function applyTransition(WorkflowInterface $advertStateMachine, EntityManagerInterface $em, Advert $advert, string $to): Response
     {
         $advertStateMachine->apply($advert, $to);
         $em->flush();
         return $this->redirectToRoute('advert_index');
+    }
+
+
+
+    #[Route('/add_picture/{id}', name: 'add_picture')]
+    public function add_picture(Advert $advert, Request $request, EntityManagerInterface $em): Response
+    {
+        $picture = new Picture();
+        $picture->setAdvert($advert);
+        $form = $this->createForm(PictureType::class, $picture);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($picture);
+            $em->flush();
+
+            return $this->redirectToRoute('advert_show', ['id' => $advert->getId()]);
+        }
+
+
+        return $this->render('admin/advert/add_picture.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    #[Route('/show/{id}', name: 'show')]
+    public function show(Advert $advert): Response
+    {
+
+        return $this->render('admin/advert/show.html.twig', [
+            'advert' => $advert,
+        ]);
     }
 }
