@@ -24,7 +24,7 @@ class AdminUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'json')]
-    private ?array $roles = [];
+    private ?array $roles = ['ROLE_ADMIN'];
 
 
     #[ORM\Column(type: 'string')]

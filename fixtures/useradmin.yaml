@@ -1,0 +1,9 @@
+App\Entity\AdminUser:
+    adminuser_1:
+      email: test@test.fr
+      username: quillian
+      plainPassword: password
+    adminuser_{2..6}:
+        email: <email()>
+        username: <name()>
+        plainPassword: password
