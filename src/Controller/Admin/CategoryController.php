@@ -63,10 +63,16 @@ class CategoryController extends AbstractController
     #[Route('/delete/{id}', name: 'delete')]
     public function delete(Request $request, Category $category, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
-            $em->remove($category);
-            $em->flush();
+        if (count($category->getAdverts()) > 0) {
+            $this->addFlash('danger', "Il y a " . count($category->getAdverts()) . " produit pour la categorie " . $category->getName());
+        } else {
+            if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
+                $em->remove($category);
+                $em->flush();
+                $this->addFlash('success', "Suppression effectué");
+            }
         }
+
 
         return $this->redirectToRoute('category_index');
     }

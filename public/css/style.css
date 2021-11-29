@@ -1,0 +1,6 @@
+.btn {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+    width: fit-content;
+}

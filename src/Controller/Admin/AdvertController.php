@@ -18,16 +18,16 @@ class AdvertController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(AdvertRepository $advertRepository): Response
     {
-        $adverts = $advertRepository->findBy(['state' => 'published']);
+        $adverts = $advertRepository->findAll();
         return $this->render('admin/advert/index.html.twig', [
             'adverts' => $adverts,
         ]);
     }
 
-    #[Route('/all/state', name: 'all_state')]
+    #[Route('/published', name: 'published')]
     public function allState(AdvertRepository $advertRepository): Response
     {
-        $adverts = $advertRepository->findAll();
+        $adverts = $advertRepository->findBy(['state' => 'published']);
         return $this->render('admin/advert/index.html.twig', [
             'adverts' => $adverts,
         ]);
@@ -77,6 +77,7 @@ class AdvertController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $advert->getId(), $request->request->get('_token'))) {
             $em->remove($advert);
             $em->flush();
+            $this->addFlash('success', "Suppression effectué");
         }
 
         return $this->redirectToRoute('advert_index');

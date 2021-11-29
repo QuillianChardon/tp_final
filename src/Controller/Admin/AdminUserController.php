@@ -82,6 +82,7 @@ class AdminUserController extends AbstractController
             if ($this->isCsrfTokenValid('delete' . $adminUser->getId(), $request->request->get('_token'))) {
                 $entityManager->remove($adminUser);
                 $entityManager->flush();
+                $this->addFlash('success', "Suppression effectué");
             }
         } else {
             $this->addFlash('danger', 'On ne peut pas s\'auto supprimer');

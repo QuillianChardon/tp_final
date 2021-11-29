@@ -8,18 +8,29 @@
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav me-auto">
 				{% if is_granted('ROLE_ADMIN') %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('category_index')}}">Categorie</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('advert_index')}}">Advert</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('advert_all_state')}}">Toutes les Adverts</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('admin_user_index')}}">User</a>
-					</li>
+					<div style="display:flex">
+						<div style="display:flex">
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('category_index')}}">Categorie</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('advert_index')}}">Advert</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('advert_published')}}">Adverts publié</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('admin_user_index')}}">User</a>
+							</li>
+
+						</div>
+						<div style="display:flex">
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_logout')}}">Deconnexion</a>
+							</li>
+						</spdivan>
+					</div>
+
 				{% endif %}
 				{% if not is_granted('ROLE_USER') %}
 					<li class="nav-item">

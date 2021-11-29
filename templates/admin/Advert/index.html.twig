@@ -47,13 +47,13 @@
 					<td>{{advert.state}}</td>
 					<td>
 						{% if workflow_can(advert, 'publish') %}
-							<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'publish'}) }}" class="btn btn-warning">published</a>
+							<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'publish'}) }}" class="btn btn-warning">Publier</a>
 						{% endif %}
 						{% if workflow_can(advert, 'reject') %}
-							<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'reject'}) }}" class="btn btn-warning">reject</a>
+							<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'reject'}) }}" class="btn btn-warning">Rejeter</a>
 						{% endif %}
 						{% if workflow_can(advert, 'unpublish') %}
-							<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'unpublish'}) }}" class="btn btn-warning">unpublished</a>
+							<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'unpublish'}) }}" class="btn btn-warning">Dépublier</a>
 						{% endif %}
 					</td>
 					<td>

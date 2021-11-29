@@ -33,10 +33,7 @@ class AdvertType extends AbstractType
                 'attr' => ['placeholder' => 'btssio.quillianchardon@gmail.com']
             ])
             ->add('price')
-            ->add('state', TextType::class, [
-                'label' => 'Statue',
-                'attr' => ['placeholder' => 'valider']
-            ])
+
             ->add('publishAt', DateType::class, [
                 'label' => "Début de publication",
                 'widget' => 'single_text',
