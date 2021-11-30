@@ -42,7 +42,7 @@ class SendNotificationEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $notification = (new Notification('Advert posted', ['email']))->content('A new advert has been posted');
+        $notification = (new Notification('Advert posted', ['email']))->content('Une nouvelle annonce est disponible sur le site');
         $adminUsers = $this->repository->findAll();
         foreach ($adminUsers as $adminUser) {
             $recipient = new Recipient($adminUser->getEmail());
