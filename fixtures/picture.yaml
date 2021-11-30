@@ -1,0 +1,15 @@
+App\Entity\Picture:
+    picture_1:
+        advert: '@advert_1'
+        path: chat1.jfif
+    picture_2:
+        advert: '@advert_1'
+        path: chat2.jfif
+    picture_3:
+        advert: '@advert_1'
+        path: chat3.jfif
+    picture_4:
+        advert: '@advert_2'
+        path: chat4.jfif
+        
+        

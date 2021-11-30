@@ -17,6 +17,7 @@
 				<th scope="col">Categorie</th>
 				<th scope="col">title</th>
 				<th scope="col">content</th>
+				<th scope="col">Image</th>
 				<th scope="col">author</th>
 				<th scope="col">email</th>
 				<th scope="col">price</th>
@@ -38,9 +39,12 @@
 					</td>
 					<td>{{advert.title}}</td>
 					<td>{{advert.content}}</td>
+					<td>{{advert.pictures|length}}&nbsp;<i class="fas fa-images"></i>
+					</td>
 					<td>{{advert.author}}</td>
 					<td>{{advert.email}}</td>
-					<td>{{advert.price}}</td>
+					<td>{{advert.price}}
+						€</td>
 
 					<td>{{advert.createdAt|date}}</td>
 					<td>

@@ -1,0 +1,9 @@
+App\Entity\Advert:
+    advert_{1..15}:
+        category: '@category*'
+        email: <email()>
+        author: <name()>
+        title: <word()>
+        content: <sentence(5)>
+        price: <numberBetween(0,100)>
+        
