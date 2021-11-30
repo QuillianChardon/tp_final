@@ -4,3 +4,9 @@
     margin-bottom: 3px;
     width: fit-content;
 }
+
+.display-flex-image {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}

@@ -26,15 +26,6 @@ class AdvertController extends AbstractController
         ]);
     }
 
-    #[Route('/published', name: 'published')]
-    public function allState(AdvertRepository $advertRepository): Response
-    {
-        $adverts = $advertRepository->findBy(['state' => 'published']);
-        return $this->render('admin/advert/index.html.twig', [
-            'adverts' => $adverts,
-        ]);
-    }
-
     // Mise en commentaire des création / modification / delete des adverts
     #[Route('/add', name: 'add')]
     public function add(Request $request, EntityManagerInterface $em): Response
@@ -69,6 +60,7 @@ class AdvertController extends AbstractController
 
         return $this->render('admin/advert/edit.html.twig', [
             'form' => $form->createView(),
+            'advert' => $advert
         ]);
     }
 
@@ -113,6 +105,7 @@ class AdvertController extends AbstractController
 
         return $this->render('admin/advert/add_picture.html.twig', [
             'form' => $form->createView(),
+            'advert' => $advert
         ]);
     }
 

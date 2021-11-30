@@ -34,11 +34,7 @@ class AdvertType extends AbstractType
             ])
             ->add('price')
 
-            ->add('publishAt', DateType::class, [
-                'label' => "Début de publication",
-                'widget' => 'single_text',
-                'required'   => false,
-            ])
+
             ->add('category');
     }
 

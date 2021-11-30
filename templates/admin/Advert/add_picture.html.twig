@@ -1,6 +1,20 @@
 {% extends "base.html.twig" %}
-
+{% block title %}Ajout photo
+{% endblock %}
 {% block body %}
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="/">Index</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="{{path('advert_index')}}">Advert</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="{{path('advert_show',{'id': advert.id})}}">{{advert.title}}</a>
+		</li>
+		<li class="breadcrumb-item active">Ajout photo</li>
+	</ol>
+
 	<h2>Ajout de photo</h2>
 	{{ form_start(form) }}
 	{{ form_errors(form) }}

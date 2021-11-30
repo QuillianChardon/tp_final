@@ -1,6 +1,16 @@
 {% extends "base.html.twig" %}
-
+{% block title %}ajout advert
+{% endblock %}
 {% block body %}
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="/">Index</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="{{path('advert_index')}}">Advert</a>
+		</li>
+		<li class="breadcrumb-item active">Ajout advert</li>
+	</ol>
 	<h2>Ajout d'une advert</h2>
 	{{ form_start(form) }}
 	{{ form_errors(form) }}
@@ -9,17 +19,18 @@
 			{{ form_row(form.title)}}
 			{{ form_row(form.content)}}
 			{{ form_row(form.author)}}
-			{{ form_row(form.email)}}
-			{{ form_row(form.category)}}
+
+
 		</div>
 		<div class="col">
+			{{ form_row(form.email)}}
+			{{ form_row(form.category)}}
 			{{ form_row(form.price)}}
-			{{ form_row(form.publishAt)}}
 		</div>
 	</div>
 	<button type="submit" class="btn btn-primary mt-2">
 		<i class="fas fa-save"></i>&nbsp;
-					Créer la categorie
+																				Créer la categorie
 	</button>
 
 	{{ form_end(form) }}

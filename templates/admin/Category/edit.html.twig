@@ -1,6 +1,16 @@
 {% extends "base.html.twig" %}
-
+{% block title %}edition categorie
+{% endblock %}
 {% block body %}
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="/">Index</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="{{path('category_index')}}">Categorie</a>
+		</li>
+		<li class="breadcrumb-item active">{{category.name}}</li>
+	</ol>
 	<h2>modification de la categorie</h2>
 	{{ form_start(form) }}
 	{{ form_errors(form) }}
@@ -9,7 +19,7 @@
 	</div>
 	<button type="submit" class="btn btn-primary mt-2">
 		<i class="fas fa-save"></i>&nbsp;
-					Modifier la categorie
+																										Modifier la categorie
 	</button>
 
 	{{ form_end(form) }}
