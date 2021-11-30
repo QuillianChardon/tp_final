@@ -2,19 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['category:input']],
+    denormalizationContext: ['groups' => ['category:output', 'advert:input']],
+)]
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['category:output'])]
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -23,9 +31,12 @@ class Category
         max: 255,
         maxMessage: 'Le nom ne peut pas depasser {{ limit }} caratère',
     )]
+    #[Groups(['category:output', 'category:input'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Advert::class)]
+    #[Groups(['category:input'])]
+    #[ApiSubresource]
     private $adverts;
 
     public function __construct()

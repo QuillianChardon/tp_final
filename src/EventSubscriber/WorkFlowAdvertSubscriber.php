@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventSubscriber;
 
 use DateTime;
+use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 
@@ -21,7 +22,7 @@ class WorkFlowAdvertSubscriber implements EventSubscriberInterface
     {
         /** @var advert $advert*/
         $advert = $event->getSubject();
-        $advert->setPublishAt(new DateTime());
+        $advert->setPublishAt(new \DateTimeImmutable());
     }
 
     public function unsetPublishedAt(Event $event): void
