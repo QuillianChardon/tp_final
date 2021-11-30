@@ -21,7 +21,7 @@ class AdvertType extends AbstractType
                 'attr' => ['placeholder' => 'Exemple']
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Nom de l\'advert',
+                'label' => 'Description de l\'advert',
                 'attr' => ['placeholder' => 'Exemple']
             ])
             ->add('author', TextType::class, [

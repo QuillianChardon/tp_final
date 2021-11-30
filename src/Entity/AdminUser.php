@@ -129,7 +129,7 @@ class AdminUser implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Get the value of plainPassword
      */
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
