@@ -172,8 +172,11 @@ class Advert
 
     public function setPublishAt(?\DateTimeInterface $publishAt): self
     {
-        $this->publishAt = $publishAt;
-
+        if (null !== $publishAt) {
+            $this->publishAt = new DateTime($publishAt);
+        } else {
+            $this->publishAt = null;
+        }
         return $this;
     }
 
