@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\MongoDbOdm\Filter\RangeFilter;
 use App\Repository\AdvertRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['advert:output']],
     denormalizationContext: ['groups' => ['advert:input', 'picutre:input']],
+    collectionOperations: ['get', 'post'],
+    itemOperations: ['get'],
 )]
 
 class Advert
