@@ -35,8 +35,8 @@
 			{% if workflow_can(advert, 'unpublish') %}
 				<a href="{{ path('advert_transition', {'id': advert.id, 'to': 'unpublish'}) }}" class="btn btn-warning">Dépublier</a>
 			{% endif %}
-			<a href="{{ path('advert_add_picture', {'id': advert.id} )}}" class="btn btn-success">
-				Photo</a>
+			{# <a href="{{ path('advert_add_picture', {'id': advert.id} )}}" class="btn btn-success">
+				Photo</a> #}
 		</div>
 	</div>
 	<h4 class="text-muted">Photo :

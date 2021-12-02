@@ -27,7 +27,6 @@
 				<th scope="col">state</th>
 				<th scope="col">Action statue</th>
 				<th scope="col">Action</th>
-				{# <th scope="col">Action</th> #}
 			</tr>
 		</thead>
 		<tbody>
@@ -70,19 +69,19 @@
 						<a href="{{ path("advert_show", {'id':advert.id} ) }}" class="btn btn-success">
 							<i class="fas fa-eye"></i>&nbsp;Detail
 						</a>
-						<a href="{{ path("advert_edit", {'id':advert.id} ) }}" class="btn btn-warning">
+						{# <a href="{{ path("advert_edit", {'id':advert.id} ) }}" class="btn btn-warning">
 							<i class="fas fa-pen"></i>&nbsp;Modification
 						</a>
 						<form method="post" action="{{ path('advert_delete', {'id': advert.id}) }}" style="display: inline-block;">
 							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advert.id) }}">
 							<button class="btn btn-danger">
 								<i class="fas fa-times"></i>&nbsp; Delete</button>
-						</form>
+						</form> #}
 					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-	<a href="{{ path("advert_add") }}" class="btn btn-primary">
-		<i class="fas fa-plus"></i>&nbsp;Ajouter</a>
+	{# <a href="{{ path("advert_add") }}" class="btn btn-primary">
+		<i class="fas fa-plus"></i>&nbsp;Ajouter</a> #}
 {% endblock %}

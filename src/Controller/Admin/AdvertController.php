@@ -29,7 +29,7 @@ class AdvertController extends AbstractController
     }
 
     // Mise en commentaire des création / modification / delete des adverts
-    #[Route('/add', name: 'add')]
+    /*#[Route('/add', name: 'add')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(AdvertType::class, new Advert());
@@ -78,7 +78,7 @@ class AdvertController extends AbstractController
 
         return $this->redirectToRoute('advert_index');
     }
-    // */
+     */
 
     #[Route(path: '/{id}/{to}', name: 'transition', methods: ['GET'], priority: -1)]
     public function applyTransition(WorkflowInterface $advertStateMachine, EntityManagerInterface $em, Advert $advert, string $to): Response
@@ -89,7 +89,7 @@ class AdvertController extends AbstractController
     }
 
 
-
+    /*
     #[Route('/add_picture/{id}', name: 'add_picture')]
     public function add_picture(Advert $advert, Request $request, EntityManagerInterface $em): Response
     {
@@ -110,6 +110,7 @@ class AdvertController extends AbstractController
             'advert' => $advert
         ]);
     }
+    */
 
 
     #[Route('/show/{id}', name: 'show')]
