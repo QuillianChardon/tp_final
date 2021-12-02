@@ -2,10 +2,9 @@
 
 namespace App\Command;
 
-use App\Repository\AdvertRepository;
+use App\Repository\PictureRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,12 +14,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:advert:rejected',
-    description: 'Delete advert rejected from X days',
+    name: 'app:picture:orphan',
+    description: 'Delete picture qui son orpheline',
 )]
-class AdvertRejectedCommand extends Command
+class PictureOrphanCommand extends Command
 {
-    public function __construct(private EntityManagerInterface $em, private AdvertRepository $advertRepo, string $name = null)
+    public function __construct(private EntityManagerInterface $em, private PictureRepository $pictureRepository, string $name = null)
     {
         parent::__construct($name);
     }
@@ -34,7 +33,7 @@ class AdvertRejectedCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Suppression des annonces rejeté');
+        $io->title('Suppression des photos sans annonces');
         $days = $input->getArgument('days');
 
         if (!$days) {
@@ -48,10 +47,10 @@ class AdvertRejectedCommand extends Command
         $datetime->modify('-' . $days . ' day');
 
 
-        /** @var Advert $advert */
-        foreach ($this->advertRepo->findAll() as $advert) {
-            if ($advert->getState() === "rejected" && $advert->getCreatedAt() <= $datetime) {
-                $this->em->remove($advert);
+        /** @var Picture $picture */
+        foreach ($this->pictureRepository->findAll() as $picture) {
+            if (empty($picture->getAdvert()) && $picture->getCreatedAt() <= $datetime) {
+                $this->em->remove($picture);
             }
         }
         $this->em->flush();

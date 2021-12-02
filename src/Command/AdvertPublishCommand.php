@@ -15,10 +15,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:advert:rejected',
-    description: 'Delete advert rejected from X days',
+    name: 'app:advert:publish',
+    description: 'Delete advert publish from X days',
 )]
-class AdvertRejectedCommand extends Command
+class AdvertPublishCommand extends Command
 {
     public function __construct(private EntityManagerInterface $em, private AdvertRepository $advertRepo, string $name = null)
     {
@@ -34,7 +34,7 @@ class AdvertRejectedCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Suppression des annonces rejeté');
+        $io->title('Suppression des annonces publié');
         $days = $input->getArgument('days');
 
         if (!$days) {
@@ -50,7 +50,7 @@ class AdvertRejectedCommand extends Command
 
         /** @var Advert $advert */
         foreach ($this->advertRepo->findAll() as $advert) {
-            if ($advert->getState() === "rejected" && $advert->getCreatedAt() <= $datetime) {
+            if ($advert->getState() === "published" && $advert->getPublishAt() <= $datetime) {
                 $this->em->remove($advert);
             }
         }
