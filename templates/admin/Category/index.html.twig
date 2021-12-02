@@ -38,7 +38,7 @@
 	</tbody>
 </table>
 <div class="navigation">
-	{{ knp_pagination_render(categories) }}
+	{{ knp_pagination_render(categories,"@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig") }}
 </div>
 <a href="{{ path("category_add") }}" class="btn btn-primary">
 	<i class="fas fa-plus"></i>&nbsp;Ajouter
