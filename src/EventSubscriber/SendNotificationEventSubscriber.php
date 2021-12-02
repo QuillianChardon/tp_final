@@ -21,7 +21,7 @@ use Symfony\Component\Notifier\Recipient\Recipient;
 
 class SendNotificationEventSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private NotifierInterface $notifier, private AdminUserRepository $repository)
+    public function __construct(private MailerInterface $mailer, private AdminUserRepository $repository)
     {
     }
 
@@ -42,11 +42,15 @@ class SendNotificationEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $notification = (new Notification('Advert posted', ['email']))->content('Une nouvelle annonce est disponible sur le site');
         $adminUsers = $this->repository->findAll();
         foreach ($adminUsers as $adminUser) {
-            $recipient = new Recipient($adminUser->getEmail());
-            $this->notifier->send($notification, $recipient);
+            $email = (new TemplatedEmail())
+                ->to(new Address($adminUser->getEmail(), $adminUser->getUsername()))
+                ->htmlTemplate('email/to_admin.html.twig')
+                ->subject('Une nouvelle annonce est disponible sur le site')
+                ->context(['advert' => $entity]);
+
+            $this->mailer->send($email);
         }
     }
 }
