@@ -41,7 +41,7 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Advert::class)]
     #[Groups(['category:input'])]
     #[ApiSubresource]
-    private $adverts;
+    private Collection $adverts;
 
     public function __construct()
     {

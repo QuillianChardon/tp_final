@@ -71,7 +71,7 @@ class Advert
 
     #[Assert\NotBlank, Assert\Length(max: 255, maxMessage: 'Le status ne peut pas avoir plus de {{ limit }} caractères',)]
     #[ORM\Column(type: 'string', length: 255, options: ['default' => 'draft'])]
-    #[Groups(['advert:output', 'advert:input'])]
+    #[Groups(['advert:output'])]
     private ?string $state = 'draft';
 
     #[Assert\NotBlank]
@@ -84,9 +84,9 @@ class Advert
     private ?\DateTimeImmutable $publishAt = null;
 
     #[ORM\OneToMany(mappedBy: 'advert', targetEntity: Picture::class, orphanRemoval: true, cascade: ['all'])]
-    #[Groups(['advert:input'])]
+    #[Groups(['advert:input', 'advert:output'])]
     #[ApiSubresource]
-    private $pictures;
+    private Collection $pictures;
 
     public function __construct()
     {

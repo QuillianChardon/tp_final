@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\CreateMediaObjectAction;
 use App\Repository\PictureRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,28 +19,57 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  */
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    iri: 'http://schema.org/MediaObject',
+    normalizationContext: ['groups' => ['picture:output']],
+    itemOperations: ['get'],
+    collectionOperations: [
+        'get',
+        'post' => [
+            'controller' => CreateMediaObjectAction::class,
+            'deserialize' => false,
+            'openapi_context' => [
+                'requestBody' => [
+                    'content' => [
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ]
+)]
 class Picture
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['picture:output'])]
     private ?int $id = null;
 
 
     #[ORM\Column(type: 'string', length: 500)]
-    #[Groups(['picture:output', 'picture:input'])]
     private ?string $path = null;
 
+    #[ApiProperty(iri: 'http://schema.org/contentUrl')]
+    #[Groups(['picture:output'])]
+    private ?string $contentUrl = null;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['timestamp:output'])]
     private ?\DateTime $createdAt = null;
 
-    #[ORM\ManyToOne(targetEntity: advert::class, inversedBy: 'pictures')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['pictures:output', 'pictures:input'])]
+    #[ORM\ManyToOne(targetEntity: Advert::class, inversedBy: 'pictures', cascade: ['remove'])]
+    #[ORM\JoinColumn(onDelete: 'cascade')]
+    //#[Groups(['pictures:output', 'pictures:input'])]
     private ?Advert $advert = null;
 
     /**
@@ -80,12 +111,12 @@ class Picture
         return $this;
     }
 
-    public function getAdvert(): ?advert
+    public function getAdvert(): ?Advert
     {
         return $this->advert;
     }
 
-    public function setAdvert(?advert $advert): self
+    public function setAdvert(?Advert $advert): self
     {
         $this->advert = $advert;
 
@@ -108,6 +139,26 @@ class Picture
     public function setFile($file)
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of contentUrl
+     */
+    public function getContentUrl()
+    {
+        return $this->contentUrl;
+    }
+
+    /**
+     * Set the value of contentUrl
+     *
+     * @return  self
+     */
+    public function setContentUrl($contentUrl)
+    {
+        $this->contentUrl = $contentUrl;
 
         return $this;
     }
