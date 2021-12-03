@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Repository\AdminUserRepository;
 use App\Repository\CategoryRepository;
 use App\Entity\Advert;
+use App\Repository\AdvertRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
@@ -28,15 +29,15 @@ class InterfaceTest extends WebTestCase
         return $client;
     }
 
-    public function testConnexion(): void
-    {
-        $client = $this->connection();
+    // public function testConnexion(): void
+    // {
+    //     $client = $this->connection();
 
-        $client->request('GET', '/admin/category/');
+    //     $client->request('GET', '/admin/category/');
 
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Categories');
-    }
+    //     $this->assertResponseIsSuccessful();
+    //     $this->assertSelectorTextContains('h1', 'Categories');
+    // }
 
     // public function testModifCategory(): void
     // {
@@ -89,41 +90,49 @@ class InterfaceTest extends WebTestCase
     // }
 
 
-    public function testDeleteCategory(): void
+    // public function testDeleteCategory(): void
+    // {
+    //     $client = $this->connection();
+
+    //     /** @var CategoryRepository */
+    //     $categoryRepository = static::getContainer()->get(CategoryRepository::class);
+    //     $lastategory = $categoryRepository->findOneBy([], ['id' => 'desc']);
+
+
+
+    //     $client->request('POST', '/admin/category/delete/' . $lastategory->getId());
+    //     $client->followRedirect();
+
+
+    //     $this->assertResponseIsSuccessful('Objet supprimer');
+    // }
+
+
+    public function testAdvert(): void
     {
         $client = $this->connection();
 
-        /** @var CategoryRepository */
-        $categoryRepository = static::getContainer()->get(CategoryRepository::class);
-        $firstCategory = $categoryRepository->findOneBy([]);
-        $lastategory = $categoryRepository->findOneBy([], ['id' => 'desc']);
+        $client->request('GET', '/admin/adverts/');
 
-        if (count($firstCategory->getAdverts()) > 0) {
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Adverts');
+    }
 
-            /** @var Advert $advert */
-            foreach ($firstCategory->getAdverts() as $advert) {
-                $advert->setCategory($lastategory);
-                $firstCategory->removeAdvert($advert);
-            }
-        }
+    public function testAdvertShow(): void
+    {
+        $client = $this->connection();
 
-        $crawler = $client->request('GET', '/admin/category/');
+        /** @var AdvertRepository */
+        $advertRepository = static::getContainer()->get(AdvertRepository::class);
+        $firstAdvert = $advertRepository->findOneBy([]);
 
 
-        $buttonCrawlerNode = $crawler->selectButton('Delete');
+        $crawler = $client->request('GET', '/admin/adverts/');
+        $link = $crawler->filter('a.btn-success')->link();
 
-        $form = $buttonCrawlerNode->form();
 
-        $token = $form->get('_token')->getValue();
-
-        dump($token);
-        $client->submitForm('Delete', [
-            '_token' => $token,
-        ]);
-
-        $firstCategoryAfterDelete = $categoryRepository->findOneBy([]);
-        dump($firstCategory);
-        dump($firstCategoryAfterDelete);
-        $this->assertNotEquals($firstCategory, $firstCategoryAfterDelete, 'même nom okay');
+        $client->click($link);
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', $firstAdvert->getTitle());
     }
 }
