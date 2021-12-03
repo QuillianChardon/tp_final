@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\MongoDbOdm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter as FilterRangeFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\OrderFilter;
 use App\Repository\AdvertRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,10 +24,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     denormalizationContext: ['groups' => ['advert:input', 'picutre:input']],
     collectionOperations: ['get', 'post'],
     itemOperations: ['get'],
-    order: ["createdAt", "price"],
 )]
 #[ApiFilter(FilterRangeFilter::class, properties: ['price'])]
-
+#[ApiFilter(OrderFilter::class, properties: ['price', 'createdAt'], arguments: ['orderParameterName' => 'order'])]
 class Advert
 {
     #[ORM\Id]

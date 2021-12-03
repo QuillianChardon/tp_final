@@ -108,31 +108,94 @@ class InterfaceTest extends WebTestCase
     // }
 
 
-    public function testAdvert(): void
-    {
-        $client = $this->connection();
+    // public function testAdvert(): void
+    // {
+    //     $client = $this->connection();
 
-        $client->request('GET', '/admin/adverts/');
+    //     $client->request('GET', '/admin/adverts/');
 
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Adverts');
-    }
+    //     $this->assertResponseIsSuccessful();
+    //     $this->assertSelectorTextContains('h1', 'Adverts');
+    // }
 
-    public function testAdvertShow(): void
+    // public function testAdvertShow(): void
+    // {
+    //     $client = $this->connection();
+
+    //     /** @var AdvertRepository */
+    //     $advertRepository = static::getContainer()->get(AdvertRepository::class);
+    //     $firstAdvert = $advertRepository->findOneBy([]);
+
+
+    //     $crawler = $client->request('GET', '/admin/adverts/');
+    //     $link = $crawler->filter('a.btn-success')->link();
+
+
+    //     $client->click($link);
+    //     $this->assertResponseIsSuccessful();
+    //     $this->assertSelectorTextContains('h1', $firstAdvert->getTitle());
+    // }
+
+
+    // public function testAdvertPublish(): void
+    // {
+    //     $client = $this->connection();
+
+    //     /** @var AdvertRepository */
+    //     $advertRepository = static::getContainer()->get(AdvertRepository::class);
+    //     $advertDraft = null;
+    //     foreach ($advertRepository->findall() as $advert) {
+    //         if ($advert->getState() == 'draft') {
+    //             $advertDraft = $advert;
+    //             break;
+    //         }
+    //     }
+
+    //     $crawler = $client->request('GET', '/admin/adverts/' . $advertDraft->getId() . '/publish');
+
+    //     $this->assertResponseIsSuccessful();
+    //     $this->assertEquals('published', $advertDraft->getState(), 'Correspondence');
+    // }
+
+
+
+    // public function testAdvertRejected(): void
+    // {
+    //     $client = $this->connection();
+
+    //     /** @var AdvertRepository */
+    //     $advertRepository = static::getContainer()->get(AdvertRepository::class);
+    //     $advertDraft = null;
+    //     foreach ($advertRepository->findall() as $advert) {
+    //         if ($advert->getState() == 'draft') {
+    //             $advertDraft = $advert;
+    //             break;
+    //         }
+    //     }
+
+    //     $crawler = $client->request('GET', '/admin/adverts/' . $advertDraft->getId() . '/reject');
+    //     $client->followRedirect();
+    //     $this->assertResponseIsSuccessful();
+    //     $this->assertEquals('rejected', $advertDraft->getState(), 'Correspondence');
+    // }
+
+    public function testAdvertUnpublish(): void
     {
         $client = $this->connection();
 
         /** @var AdvertRepository */
         $advertRepository = static::getContainer()->get(AdvertRepository::class);
-        $firstAdvert = $advertRepository->findOneBy([]);
+        $advertDraft = null;
+        foreach ($advertRepository->findall() as $advert) {
+            if ($advert->getState() == 'published') {
+                $advertDraft = $advert;
+                break;
+            }
+        }
 
-
-        $crawler = $client->request('GET', '/admin/adverts/');
-        $link = $crawler->filter('a.btn-success')->link();
-
-
-        $client->click($link);
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', $firstAdvert->getTitle());
+        if ($advertDraft !== null) {
+            $client->request('GET', '/admin/adverts/' . $advertDraft->getId() . '/unpublish');
+            $this->assertEquals('rejected', $advertDraft->getState(), 'Correspondence');
+        }
     }
 }
