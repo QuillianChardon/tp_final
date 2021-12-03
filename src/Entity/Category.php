@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['category:input']],
+
     denormalizationContext: ['groups' => ['category:output', 'advert:input']],
     collectionOperations: ['get'],
     itemOperations: ['get'],
@@ -35,11 +35,10 @@ class Category
         max: 255,
         maxMessage: 'Le nom ne peut pas depasser {{ limit }} caratère',
     )]
-    #[Groups(['category:output', 'category:input'])]
+    #[Groups(['category:output'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Advert::class)]
-    #[Groups(['category:input'])]
     #[ApiSubresource]
     private Collection $adverts;
 

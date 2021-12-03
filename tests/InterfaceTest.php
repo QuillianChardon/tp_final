@@ -29,15 +29,15 @@ class InterfaceTest extends WebTestCase
         return $client;
     }
 
-    // public function testConnexion(): void
-    // {
-    //     $client = $this->connection();
+    public function testConnexion(): void
+    {
+        $client = $this->connection();
 
-    //     $client->request('GET', '/admin/category/');
+        $client->request('GET', '/admin/category/');
 
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertSelectorTextContains('h1', 'Categories');
-    // }
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Categories');
+    }
 
     // public function testModifCategory(): void
     // {
@@ -179,23 +179,23 @@ class InterfaceTest extends WebTestCase
     //     $this->assertEquals('rejected', $advertDraft->getState(), 'Correspondence');
     // }
 
-    public function testAdvertUnpublish(): void
-    {
-        $client = $this->connection();
+    // public function testAdvertUnpublish(): void
+    // {
+    //     $client = $this->connection();
 
-        /** @var AdvertRepository */
-        $advertRepository = static::getContainer()->get(AdvertRepository::class);
-        $advertDraft = null;
-        foreach ($advertRepository->findall() as $advert) {
-            if ($advert->getState() == 'published') {
-                $advertDraft = $advert;
-                break;
-            }
-        }
+    //     /** @var AdvertRepository */
+    //     $advertRepository = static::getContainer()->get(AdvertRepository::class);
+    //     $advertDraft = null;
+    //     foreach ($advertRepository->findall() as $advert) {
+    //         if ($advert->getState() == 'published') {
+    //             $advertDraft = $advert;
+    //             break;
+    //         }
+    //     }
 
-        if ($advertDraft !== null) {
-            $client->request('GET', '/admin/adverts/' . $advertDraft->getId() . '/unpublish');
-            $this->assertEquals('rejected', $advertDraft->getState(), 'Correspondence');
-        }
-    }
+    //     if ($advertDraft !== null) {
+    //         $client->request('GET', '/admin/adverts/' . $advertDraft->getId() . '/unpublish');
+    //         $this->assertEquals('rejected', $advertDraft->getState(), 'Correspondence');
+    //     }
+    // }
 }
