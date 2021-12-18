@@ -176,7 +176,7 @@ class ApiTest extends ApiTestCase
         $advert = $this->getAdvertWithPicture();
 
         $response = static::createClient()->request('GET', $advert['category'] . $advert['@id'] . '/pictures');
-        dump($response->toArray());
+        //dump($response->toArray());
         $this->assertResponseIsSuccessful();
     }
 }

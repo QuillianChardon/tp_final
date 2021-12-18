@@ -6,6 +6,7 @@ use App\Repository\AdminUserRepository;
 use App\Repository\CategoryRepository;
 use App\Entity\Advert;
 use App\Repository\AdvertRepository;
+use SebastianBergmann\Environment\Console;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
@@ -198,4 +199,84 @@ class InterfaceTest extends WebTestCase
     //         $this->assertEquals('rejected', $advertDraft->getState(), 'Correspondence');
     //     }
     // }
+
+
+    // public function testUserDelete(): void
+    // {
+    //     $client = $this->connection();
+    //     /** @var AdminUserRepository */
+    //     $adminUserRepository = static::getContainer()->get(AdminUserRepository::class);
+    //     $allUser = $adminUserRepository->findAll();
+    //     $userTest = null;
+    //     foreach ($allUser as $value) {
+    //         if ($value->getEmail() !== 'test@test.fr' && $userTest == null) {
+    //             $userTest = $value;
+    //         }
+    //     }
+
+    //     $client->request('POST', '/admin/user/delete/' . $userTest->getId());
+    //     $client->followRedirect();
+
+    //     $this->assertResponseIsSuccessful();
+    //     $this->assertSelectorTextContains('h1', 'AdminUser index');
+    // }
+
+    // public function testUserModif(): void
+    // {
+    //     $client = $this->connection();
+
+    //     /** @var AdminUserRepository */
+    //     $adminUserRepository = static::getContainer()->get(AdminUserRepository::class);
+    //     $allUser = $adminUserRepository->findAll();
+
+    //     $userTest = null;
+    //     foreach ($allUser as $value) {
+    //         if ($value->getEmail() !== 'test@test.fr' && $userTest == null) {
+    //             $userTest = $value;
+    //         }
+    //     }
+
+
+    //     $crawler = $client->request('GET', '/admin/user/');
+    //     $link = $crawler->filter('a.btn-warning[href*="edit/' . $userTest->getId() . '/"]')->link();
+
+    //     $client->click($link);
+    //     $this->assertResponseIsSuccessful();
+    //     $this->assertSelectorTextContains('h2', 'Modification new AdminUser');
+
+    //     $newEmail = 'azertyNew5@gmail.com';
+    //     $client->submitForm("Modifier la l'utilisateur", [
+    //         'admin_user[email]' => $newEmail
+    //     ]);
+    //     $crawler = $client->followRedirect();
+    //     $User = $adminUserRepository->findOneById($userTest->getId());
+    //     $this->assertEquals($newEmail, $User->getEmail(), 'même email okay');
+    // }
+
+
+    public function testUserAdd(): void
+    {
+        $client = $this->connection();
+
+        /** @var AdminUserRepository */
+        $adminUserRepository = static::getContainer()->get(AdminUserRepository::class);
+
+        $crawler = $client->request('GET', '/admin/user/');
+        $link = $crawler->filter('a[href*="/user/new"]')->link();
+
+        $client->click($link);
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h2', 'Create new AdminUser');
+        $newName = 'azertyCreate';
+        $newEmail = 'azertyCreate@test.com';
+        $newPwd = 'azerty';
+        $client->submitForm('Créer la l\'utilisateur', [
+            'admin_user[username]' => $newName,
+            'admin_user[email]' => $newEmail,
+            'admin_user[plainpassword]' => $newPwd,
+        ]);
+        $crawler = $client->followRedirect();
+        $newUser = $adminUserRepository->findOneByEmail($newEmail);
+        $this->assertNotNull($newUser, 'même nom okay');
+    }
 }

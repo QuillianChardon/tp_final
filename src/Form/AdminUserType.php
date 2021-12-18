@@ -27,7 +27,8 @@ class AdminUserType extends AbstractType
                 ]
             ])
             ->add('plainpassword', PasswordType::class, [
-                'label' => 'Mot de passe'
+                'label' => 'Mot de passe',
+                'required' => false,
             ]);
     }
 
