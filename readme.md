@@ -19,6 +19,8 @@ symfony serv
 ```
 
 - Ce rendre sur 127.0.0.1:8000
+- compte : test@test.fr
+- password
 
 
 
