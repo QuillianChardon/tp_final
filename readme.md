@@ -9,6 +9,8 @@ Projet créé en cours de symfony !
 - Faire un composer install
 - Executer les commandes suivantes :
 ```CMD
+composer i
+
 php bin/console d:d:c
 
 php bin/console d:m:m
